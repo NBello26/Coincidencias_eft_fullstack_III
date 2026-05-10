@@ -40,13 +40,13 @@ jobs:
                 "docker pull ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest",
                 "docker stop ms-coincidencias || true",
                 "docker rm ms-coincidencias || true",
-                "docker run -d --name ms-coincidencias -p 8084:8084 -e JAVA_OPTS=\"-Xmx250m -Dspring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration\" --memory=\"350m\" -e EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=\"${{ secrets.EUREKA_URL_PRIVATE }}\" ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest"
+                "docker run -d --name ms-coincidencias -p 8084:8084 -e JAVA_OPTS=\"-Xmx250m\" --memory=\"350m\" -e DB_URL=\"${{ secrets.DB_URL }}\" -e DB_USERNAME=\"${{ secrets.DB_USERNAME }}\" -e DB_PASSWORD=\"${{ secrets.DB_PASSWORD }}\" -e EUREKA_URL=\"${{ secrets.EUREKA_URL_PRIVATE }}\" ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest"
               ]
             }' \
             --query "Command.CommandId" \
             --output text)
             
-          echo "Comando enviado: $COMMAND_ID. Esperando..."
+          echo "Comando enviado: $COMMAND_ID. Esperando ejecución..."
             
           aws ssm wait command-executed \
             --command-id "$COMMAND_ID" \
