@@ -40,7 +40,7 @@ jobs:
                 "docker pull ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest",
                 "docker stop ms-coincidencias || true",
                 "docker rm ms-coincidencias || true",
-                "docker run -d --name ms-coincidencias -p 8084:8084 -e JAVA_OPTS=\"-Xmx250m\" --memory=\"350m\" -e EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=\"${{ secrets.EUREKA_URL_PRIVATE }}\" ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest"
+                "docker run -d --name ms-coincidencias -p 8084:8084 -e JAVA_OPTS=\"-Xmx250m -Dspring.autoconfigure.exclude=org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration,org.springframework.boot.autoconfigure.orm.jpa.HibernateJpaAutoConfiguration,org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration\" --memory=\"350m\" -e EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE=\"${{ secrets.EUREKA_URL_PRIVATE }}\" ${{ secrets.ECR_REPO_URL_COINCIDENCIAS }}:latest"
               ]
             }' \
             --query "Command.CommandId" \
