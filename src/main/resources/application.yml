@@ -1,0 +1,23 @@
+server:
+  port: 8084
+
+spring:
+  application:
+    name: ms-motor-coincidencias
+  # Eliminamos datasource y jpa por completo
+
+eureka:
+  client:
+    service-url:
+      defaultZone: ${EUREKA_URL:http://localhost:8761/eureka/}
+
+# CONFIGURACIÓN DE SWAGGER / OPENAPI
+springdoc:
+  show-actuator: true 
+  swagger-ui:
+    use-root-path: true
+    path: /swagger-ui.html
+    operations-sorter: alpha
+    tags-sorter: alpha
+  api-docs:
+    path: /api/coincidencias/v3/api-docs
