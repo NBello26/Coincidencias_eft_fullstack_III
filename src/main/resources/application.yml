@@ -4,13 +4,13 @@ server:
 spring:
   application:
     name: ms-coincidencias
-    
+
   # CONEXIÓN PARAMETRIZADA A LA BASE DE DATOS DOCKER/AWS
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/db_coincidencias}
     username: ${DB_USERNAME:admin}
     password: ${DB_PASSWORD:admin}
-    
+
   jpa:
     hibernate:
       ddl-auto: update
@@ -24,7 +24,7 @@ eureka:
 
 # CONFIGURACIÓN DE SWAGGER / OPENAPI
 springdoc:
-  show-actuator: true 
+  show-actuator: true
   swagger-ui:
     use-root-path: true
     path: /swagger-ui.html

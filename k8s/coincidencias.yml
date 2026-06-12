@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coincidencias-deployment
+  labels:
+    app: ms-coincidencias
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ms-coincidencias
+  template:
+    metadata:
+      labels:
+        app: ms-coincidencias
+    spec:
+      containers:
+      - name: ms-coincidencias
+        image: 782424855823.dkr.ecr.us-east-1.amazonaws.com/ms-coincidencias:${IMAGE_TAG}
+        ports:
+        - containerPort: 8084
+        env:
+        - name: DB_URL
+          value: "jdbc:postgresql://sanosdb-service:5432/db_coincidencias"
+        - name: DB_USERNAME
+          value: "admin"
+        - name: DB_PASSWORD
+          value: "admin"
+        - name: EUREKA_URL
+          value: "http://eureka-service:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: coincidencias-service
+spec:
+  type: ClusterIP
+  selector:
+    app: ms-coincidencias
+  ports:
+    - protocol: TCP
+      port: 8084
+      targetPort: 8084
