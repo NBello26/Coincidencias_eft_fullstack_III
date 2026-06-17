@@ -22,6 +22,8 @@ spec:
         env:
         - name: DB_URL
           value: "jdbc:postgresql://sanosdb-service:5432/db_coincidencias"
+        - name: SPRING_JPA_HIBERNATE_DDL_AUTO
+          value: "update"
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
